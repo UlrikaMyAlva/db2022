@@ -18,7 +18,7 @@ In the original table, everything where together with a column each. To normaliz
 # Script
 <br>
 <br>
-**First, you need to load the table that is going to be normalized (UNF) into the database. The denormalized-data.csv exists in this git repository.**
+## First, you need to load the table that is going to be normalized (UNF) into the database. The denormalized-data.csv exists in this git repository.
 <br>
 <br>
 USE iths;
