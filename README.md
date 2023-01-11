@@ -52,198 +52,179 @@ IGNORE 1 ROWS;<br>
 <br>
 <br>
 DROP TABLE IF EXISTS iths.Grade; <br>
-DROP TABLE IF EXISTS iths.School;
-DROP TABLE IF EXISTS iths.StudentSchool;
-DROP TABLE IF EXISTS iths.Hobby;
-DROP TABLE IF EXISTS iths.StudentHobby;
-DROP TABLE IF EXISTS iths.Phone;
-DROP TABLE IF EXISTS iths.Student;
-
-
-DROP TABLE IF EXISTS iths.Student;
-
-Create table Student (
-
-	StudentId INT NOT NULL,
-	Student VARCHAR(26) NOT NULL,
-	PRIMARY KEY (StudentId)
-
-);
-
-INSERT INTO Student (StudentId, Student) SELECT DISTINCT Id,
-Name FROM UNF;
-
-
-
-
-DROP TABLE IF EXISTS iths.Grade;
-
-Create table Grade (
-
-	StudentId INT NOT NULL,
-	Grade VARCHAR(26),
-	PRIMARY KEY (StudentId),
-	FOREIGN KEY (StudentId) REFERENCES Student(StudentId)
-
-);
-
-INSERT INTO Grade (StudentId, Grade) SELECT DISTINCT Id,
-Grade FROM UNF;
-
-UPDATE Grade SET Grade = 'First-class'
-WHERE Grade IN ('First class', 'Firstclass');
-
-UPDATE Grade SET Grade = 'Excellent'
-WHERE Grade IN ('Eksellent');
-
-UPDATE Grade SET Grade = 'Awesome'
-WHERE Grade IN ('Awessome');
-
-UPDATE Grade SET Grade = 'Gorgeous'
-WHERE Grade IN ('Gorgetus', 'Gorgeus');
-
-
-
-
-
-DROP TABLE IF EXISTS iths.School;
-
-CREATE TABLE School (
-
-	SchoolId INT NOT NULL AUTO_INCREMENT,
-	Name VARCHAR(26) NOT NULL UNIQUE,
-	City VARCHAR(26) NOT NULL UNIQUE,
-	PRIMARY KEY (SchoolId)
-
-);
-
-
-
-INSERT INTO School (Name, City)
-SELECT DISTINCT School, City FROM UNF;
-
-
-
-DROP TABLE IF EXISTS iths.StudentSchool;
-
-CREATE TABLE StudentSchool (
-	
-	StudentId INT NOT NULL,
-	SchoolId INT NOT NULL,
-	PRIMARY KEY (SchoolId, StudentId),
-	FOREIGN KEY (StudentId) REFERENCES Student(StudentId)
-
-);
-
-
-INSERT INTO StudentSchool (StudentId, SchoolId)
-SELECT DISTINCT Id, School.SchoolId 
-FROM UNF
-INNER JOIN School ON School.Name = UNF.School;
-
-
-ALTER TABLE School
-ADD FOREIGN KEY (SchoolId) REFERENCES StudentSchool(SchoolId);
-
-
-
-
-
-DROP TABLE IF EXISTS iths.Hobby;
-
-CREATE TABLE Hobby (
-
-	HobbyId INT NOT NULL AUTO_INCREMENT,
-	Name VARCHAR(26) NOT NULL,
-	PRIMARY KEY (HobbyId)
-
-);
-
-
-INSERT INTO Hobby (Name)
-SELECT DISTINCT Hobby FROM (
-  SELECT Id as StudentId, trim(SUBSTRING_INDEX(Hobbies, ",", 1)) AS Hobby FROM UNF
-  WHERE HOBBIES != ""
-  UNION SELECT Id as StudentId, trim(substring_index(substring_index(Hobbies, ",", -2),"," ,1)) FROM UNF
-  WHERE HOBBIES != ""
-  UNION SELECT Id as StudentId, trim(substring_index(Hobbies, ",", -1)) FROM UNF
-  WHERE HOBBIES != ""
-) AS Hobbies2;
-
-
-
-DROP TABLE IF EXISTS iths.StudentHobby;
-
-CREATE TABLE StudentHobby (
-	
-	StudentId INT NOT NULL,
-	HobbyId INT NOT NULL,
-	PRIMARY KEY (StudentId, HobbyId),
-	FOREIGN KEY (StudentId) REFERENCES Student(StudentId)
-
-);
-
-INSERT INTO StudentHobby (StudentId, HobbyId)
-SELECT DISTINCT StudentId, Hobby.HobbyId FROM (
-	SELECT Id as StudentId, trim(SUBSTRING_INDEX(Hobbies, ",", 1)) AS Hobby FROM UNF
-  	WHERE HOBBIES != ""
-  	UNION SELECT Id as StudentId, trim(substring_index(substring_index(Hobbies, ",", -2),"," ,1)) FROM UNF
-  	WHERE HOBBIES != ""
-  	UNION SELECT Id as StudentId, trim(substring_index(Hobbies, ",", -1)) FROM UNF
-  	WHERE HOBBIES != ""
-
-) AS Hobbies2 INNER JOIN Hobby ON Hobbies2.Hobby = Hobby.Name;
-
-
-ALTER TABLE Hobby
-ADD FOREIGN KEY (HobbyId) REFERENCES StudentHobby(HobbyId);
-
-
-
-
-DROP TABLE IF EXISTS iths.Phone;
-
-Create table Phone (
-
-	StudentId INT NOT NULL,
-	Type VARCHAR(26),
-	Number VARCHAR(26),
-	PRIMARY KEY (StudentId, Number),
-	FOREIGN KEY (StudentId) REFERENCES Student(StudentId)
-
-);
-
-INSERT INTO Phone(Number, StudentId)
-SELECT DISTINCT HomePhone, Id FROM UNF 
-WHERE HomePhone IS NOT NULL AND HomePhone != '';
-
-UPDATE Phone 
-SET Type = "Home" 
-WHERE Type IS NULL;
-
-
-INSERT INTO Phone(Number, StudentId)
-SELECT DISTINCT JobPhone, Id FROM UNF 
-WHERE JobPhone IS NOT NULL AND JobPhone != '';
-
-UPDATE Phone 
-SET Type = "Job" 
-WHERE Type IS NULL;
-
-
-INSERT INTO Phone(Number, StudentId)
-SELECT DISTINCT MobilePhone1, Id FROM UNF 
-WHERE MobilePhone1 IS NOT NULL AND MobilePhone1 != '';
-
-UPDATE Phone 
-SET Type = "Mobile" 
-WHERE Type IS NULL;
-
-
-INSERT INTO Phone(Number, StudentId)
-SELECT DISTINCT MobilePhone2, Id FROM UNF 
-WHERE MobilePhone2 IS NOT NULL AND MobilePhone2 != '';
-
-UPDATE Phone 
-SET Type = "Mobile" 
-WHERE Type IS NULL;
+DROP TABLE IF EXISTS iths.School; <br>
+DROP TABLE IF EXISTS iths.StudentSchool; <br>
+DROP TABLE IF EXISTS iths.Hobby; <br>
+DROP TABLE IF EXISTS iths.StudentHobby; <br>
+DROP TABLE IF EXISTS iths.Phone; <br>
+DROP TABLE IF EXISTS iths.Student; <br>
+<br>
+<br>
+DROP TABLE IF EXISTS iths.Student;<br>
+<br>
+Create table Student (<br>
+<br>
+<br>
+	StudentId INT NOT NULL,<br>
+	Student VARCHAR(26) NOT NULL,<br>
+	PRIMARY KEY (StudentId)<br>
+<br>
+<br>);
+<br>
+INSERT INTO Student (StudentId, Student) SELECT DISTINCT Id,<br>
+Name FROM UNF;<br>
+<br>
+<br>
+DROP TABLE IF EXISTS iths.Grade; <br>
+<br>
+Create table Grade (<br>
+<br>
+	StudentId INT NOT NULL,<br>
+	Grade VARCHAR(26),<br>
+	PRIMARY KEY (StudentId),<br>
+	FOREIGN KEY (StudentId) REFERENCES Student(StudentId)<br>
+<br>
+);<br>
+<br>
+INSERT INTO Grade (StudentId, Grade) SELECT DISTINCT Id,<br>
+Grade FROM UNF;<br>
+<br>
+UPDATE Grade SET Grade = 'First-class'<br>
+WHERE Grade IN ('First class', 'Firstclass');<br>
+<br>
+UPDATE Grade SET Grade = 'Excellent'<br>
+WHERE Grade IN ('Eksellent');<br>
+<br>
+UPDATE Grade SET Grade = 'Awesome'<br>
+WHERE Grade IN ('Awessome');<br>
+<br>
+UPDATE Grade SET Grade = 'Gorgeous'<br>
+WHERE Grade IN ('Gorgetus', 'Gorgeus');<br>
+<br>
+<br>
+DROP TABLE IF EXISTS iths.School;<br>
+<br>
+CREATE TABLE School (<br>
+<br>
+	SchoolId INT NOT NULL AUTO_INCREMENT,<br>
+	Name VARCHAR(26) NOT NULL UNIQUE,<br>
+	City VARCHAR(26) NOT NULL UNIQUE,<br>
+	PRIMARY KEY (SchoolId)<br>
+<br>
+);<br>
+<br>
+INSERT INTO School (Name, City)<br>
+SELECT DISTINCT School, City FROM UNF;<br>
+<br>
+<br>
+DROP TABLE IF EXISTS iths.StudentSchool;<br>
+<br>
+CREATE TABLE StudentSchool (<br>
+<br>
+	StudentId INT NOT NULL,<br>
+	SchoolId INT NOT NULL,<br>
+	PRIMARY KEY (SchoolId, StudentId),<br>
+	FOREIGN KEY (StudentId) REFERENCES Student(StudentId)<br>
+<br>
+);<br>
+<br>
+INSERT INTO StudentSchool (StudentId, SchoolId)<br>
+SELECT DISTINCT Id, School.SchoolId <br>
+FROM UNF<br>
+INNER JOIN School ON School.Name = UNF.School;<br>
+<br>
+ALTER TABLE School<br>
+ADD FOREIGN KEY (SchoolId) REFERENCES StudentSchool(SchoolId);<br>
+<br>
+<br>
+DROP TABLE IF EXISTS iths.Hobby;<br>
+<br>
+CREATE TABLE Hobby (<br>
+<br>
+	HobbyId INT NOT NULL AUTO_INCREMENT,<br>
+	Name VARCHAR(26) NOT NULL,<br>
+	PRIMARY KEY (HobbyId)<br>
+<br>
+);<br>
+<br>
+INSERT INTO Hobby (Name) <br>
+SELECT DISTINCT Hobby FROM ( <br>
+  SELECT Id as StudentId, trim(SUBSTRING_INDEX(Hobbies, ",", 1)) AS Hobby FROM UNF <br>
+  WHERE HOBBIES != ""<br>
+  UNION SELECT Id as StudentId, trim(substring_index(substring_index(Hobbies, ",", -2),"," ,1)) FROM UNF<br>
+  WHERE HOBBIES != ""<br>
+  UNION SELECT Id as StudentId, trim(substring_index(Hobbies, ",", -1)) FROM UNF<br>
+  WHERE HOBBIES != ""<br>
+) AS Hobbies2;<br>
+<br>
+<br>
+DROP TABLE IF EXISTS iths.StudentHobby;<br>
+<br>
+CREATE TABLE StudentHobby (<br>
+<br>	
+	StudentId INT NOT NULL,<br>
+	HobbyId INT NOT NULL,<br>
+	PRIMARY KEY (StudentId, HobbyId),<br>
+	FOREIGN KEY (StudentId) REFERENCES Student(StudentId)<br>
+<br>
+<br>);
+<br>
+INSERT INTO StudentHobby (StudentId, HobbyId)<br>
+SELECT DISTINCT StudentId, Hobby.HobbyId FROM (<br>
+	SELECT Id as StudentId, trim(SUBSTRING_INDEX(Hobbies, ",", 1)) AS Hobby FROM UNF<br>
+  	WHERE HOBBIES != ""<br>
+  	UNION SELECT Id as StudentId, trim(substring_index(substring_index(Hobbies, ",", -2),"," ,1)) FROM UNF<br>
+  	WHERE HOBBIES != ""<br>
+  	UNION SELECT Id as StudentId, trim(substring_index(Hobbies, ",", -1)) FROM UNF<br>
+  	WHERE HOBBIES != ""<br>
+<br>
+) AS Hobbies2 INNER JOIN Hobby ON Hobbies2.Hobby = Hobby.Name;<br>
+<br>
+<br>
+ALTER TABLE Hobby<br>
+ADD FOREIGN KEY (HobbyId) REFERENCES StudentHobby(HobbyId);<br>
+<br>
+<br>
+DROP TABLE IF EXISTS iths.Phone;<br>
+<br>
+Create table Phone (<br>
+<br>
+	StudentId INT NOT NULL,<br>
+	Type VARCHAR(26),<br>
+	Number VARCHAR(26),<br>
+	PRIMARY KEY (StudentId, Number),<br>
+	FOREIGN KEY (StudentId) REFERENCES Student(StudentId)<br>
+<br>
+);<br>
+<br>
+INSERT INTO Phone(Number, StudentId)<br>
+SELECT DISTINCT HomePhone, Id FROM UNF <br>
+WHERE HomePhone IS NOT NULL AND HomePhone != '';<br>
+<br>
+UPDATE Phone <br>
+SET Type = "Home" <br>
+WHERE Type IS NULL;<br>
+<br>
+INSERT INTO Phone(Number, StudentId)<br>
+SELECT DISTINCT JobPhone, Id FROM UNF <br>
+WHERE JobPhone IS NOT NULL AND JobPhone != '';<br>
+<br>
+UPDATE Phone <br>
+SET Type = "Job" <br>
+WHERE Type IS NULL;<br>
+<br>
+INSERT INTO Phone(Number, StudentId)<br>
+SELECT DISTINCT MobilePhone1, Id FROM UNF <br>
+WHERE MobilePhone1 IS NOT NULL AND MobilePhone1 != '';<br>
+<br>
+UPDATE Phone <br>
+SET Type = "Mobile" <br>
+WHERE Type IS NULL;<br>
+<br>
+INSERT INTO Phone(Number, StudentId) <br>
+SELECT DISTINCT MobilePhone2, Id FROM UNF <br>
+WHERE MobilePhone2 IS NOT NULL AND MobilePhone2 != ''; <br>
+<br>
+UPDATE Phone <br>
+SET Type = "Mobile" <br>
+WHERE Type IS NULL; <br>
