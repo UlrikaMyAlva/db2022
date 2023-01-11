@@ -21,29 +21,29 @@ In the original table, everything where together with a column each. To normaliz
 **First, you need to load the table that is going to be normalized (UNF) into the database. The denormalized-data.csv exists in this git repository.**
 <br>
 <br>
-``USE iths;
+USE iths;
 <br>
 DROP TABLE IF EXISTS UNF;
 <br>
-CREATE TABLE `UNF` (
-	`Id` DECIMAL(38, 0) NOT NULL,
-	`Name` VARCHAR(26) NOT NULL,
-	`Grade` VARCHAR(11) NOT NULL,
-	`Hobbies` VARCHAR(25),
-	`City` VARCHAR(10) NOT NULL,
-	`School` VARCHAR(30) NOT NULL,
-	`HomePhone` VARCHAR(15),
-	`JobPhone` VARCHAR(15),
-	`MobilePhone1` VARCHAR(15),
-	`MobilePhone2` VARCHAR(15)
-) ENGINE=INNODB;
-
-LOAD DATA INFILE '/var/lib/mysql-files/denormalized-data.csv'
-INTO TABLE UNF
-CHARACTER SET latin1
-FIELDS TERMINATED BY ','
-ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;``
+CREATE TABLE `UNF` ( <br>
+	`Id` DECIMAL(38, 0) NOT NULL, <br>
+	`Name` VARCHAR(26) NOT NULL, <br>
+	`Grade` VARCHAR(11) NOT NULL, <br>
+	`Hobbies` VARCHAR(25), <br>
+	`City` VARCHAR(10) NOT NULL, <br>
+	`School` VARCHAR(30) NOT NULL, <br>
+	`HomePhone` VARCHAR(15), <br>
+	`JobPhone` VARCHAR(15), <br>
+	`MobilePhone1` VARCHAR(15), <br>
+	`MobilePhone2` VARCHAR(15) <br>
+) ENGINE=INNODB; <br>
+<br>
+LOAD DATA INFILE '/var/lib/mysql-files/denormalized-data.csv' <br>
+INTO TABLE UNF<br>
+CHARACTER SET latin1<br>
+FIELDS TERMINATED BY ','<br>
+ENCLOSED BY '"'<br>
+LINES TERMINATED BY '\n'<br>
+IGNORE 1 ROWS;<br>
 
 
