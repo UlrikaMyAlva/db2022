@@ -18,7 +18,7 @@ In the original table, everything where together with a column each. To normaliz
 # Script
 <br>
 <br>
-## First, you need to load the table that is going to be normalized (UNF) into the database. The denormalized-data.csv exists in this git repository. 
+**First, you need to load the table that is going to be normalized (UNF) into the database. The denormalized-data.csv exists in this git repository.** 
 <br>
 <br>
 USE iths;
@@ -45,8 +45,9 @@ FIELDS TERMINATED BY ','<br>
 ENCLOSED BY '"'<br>
 LINES TERMINATED BY '\n'<br>
 IGNORE 1 ROWS;<br>
-
-
+<br>
+<br>
+<br>
 **After that the normalization starts. All the tables are dropped if they exist.** <br>
 **The first table, Student, have the StudentId and the Students names**<br>
 <br>
@@ -74,6 +75,7 @@ Create table Student (<br>
 INSERT INTO Student (StudentId, Student) SELECT DISTINCT Id,<br>
 Name FROM UNF;<br>
 <br>
+**The Grade Table had a lot of spelling mistakes that needed to be updated manually.** <br>
 <br>
 DROP TABLE IF EXISTS iths.Grade; <br>
 <br>
@@ -104,6 +106,9 @@ WHERE Grade IN ('Gorgetus', 'Gorgeus');<br>
 <br>
 DROP TABLE IF EXISTS iths.School;<br>
 <br>
+**School needed to be created before StudentSchool, even though StudentSchool is the link between the Student table and the School table.**<br>
+**This makes StudentSchool able to get the SchoolId column. After StudentSchool, the foreign key is added to School.** <br>
+<br>
 CREATE TABLE School (<br>
 <br>
 	SchoolId INT NOT NULL AUTO_INCREMENT,<br>
@@ -128,6 +133,8 @@ CREATE TABLE StudentSchool (<br>
 <br>
 );<br>
 <br>
+**Here, SchoolId is joined using the values that corelates between the name of the school in UNF and School**<br>
+<br>
 INSERT INTO StudentSchool (StudentId, SchoolId)<br>
 SELECT DISTINCT Id, School.SchoolId <br>
 FROM UNF<br>
@@ -136,6 +143,7 @@ INNER JOIN School ON School.Name = UNF.School;<br>
 ALTER TABLE School<br>
 ADD FOREIGN KEY (SchoolId) REFERENCES StudentSchool(SchoolId);<br>
 <br>
+**In the Hobby Table, multiple hobbies where listed in the same box. To combat this, substrings are used.** <br>
 <br>
 DROP TABLE IF EXISTS iths.Hobby;<br>
 <br>
@@ -184,6 +192,8 @@ SELECT DISTINCT StudentId, Hobby.HobbyId FROM (<br>
 ALTER TABLE Hobby<br>
 ADD FOREIGN KEY (HobbyId) REFERENCES StudentHobby(HobbyId);<br>
 <br>
+**The phone table was the most fun one to do. Each Number and StudentId is moved from UNF to Phone.**<br>
+**Then, each type is populated after each kind of phone, making it possible to use 'IS NULL' to alter the type.**<br>
 <br>
 DROP TABLE IF EXISTS iths.Phone;<br>
 <br>
@@ -200,6 +210,8 @@ Create table Phone (<br>
 INSERT INTO Phone(Number, StudentId)<br>
 SELECT DISTINCT HomePhone, Id FROM UNF <br>
 WHERE HomePhone IS NOT NULL AND HomePhone != '';<br>
+<br>
+**Because only the HomePhone is moved, IS NULL can be used. This is used after every type of number is moved**<br>
 <br>
 UPDATE Phone <br>
 SET Type = "Home" <br>
@@ -228,3 +240,6 @@ WHERE MobilePhone2 IS NOT NULL AND MobilePhone2 != ''; <br>
 UPDATE Phone <br>
 SET Type = "Mobile" <br>
 WHERE Type IS NULL; <br>
+<br>
+**This is the end of Normalization of UNF**<br>
+
