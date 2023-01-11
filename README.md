@@ -22,9 +22,9 @@ In the original table, everything where together with a column each. To normaliz
 <br>
 <br>
 ``USE iths;
-
+<br>
 DROP TABLE IF EXISTS UNF;
-
+<br>
 CREATE TABLE `UNF` (
 	`Id` DECIMAL(38, 0) NOT NULL,
 	`Name` VARCHAR(26) NOT NULL,
