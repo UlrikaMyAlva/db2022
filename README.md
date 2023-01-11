@@ -5,7 +5,7 @@ To make this diagram we have used Mermaid, which is a tool to be able to draw a 
 
 # ER diagram
 
-![mermaid-diagram-2023-01-09-195722](https://user-images.githubusercontent.com/117780904/211386390-89152562-cefa-4e38-bfe4-1f880b848a36.png)
+![mermaid-diagram-2023-01-11-181400](https://user-images.githubusercontent.com/117780904/211872360-f6637edd-19df-463b-a40d-15655df05e8b.png)
 
 
 erDiagram
