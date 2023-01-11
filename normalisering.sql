@@ -169,10 +169,6 @@ SELECT DISTINCT StudentId, Hobby.HobbyId FROM (
 ) AS Hobbies2 INNER JOIN Hobby ON Hobbies2.Hobby = Hobby.Name;
 
 
-ALTER TABLE Hobby
-ADD FOREIGN KEY (HobbyId) REFERENCES StudentHobby(HobbyId);
-
-
 
 
 DROP TABLE IF EXISTS iths.Phone;
