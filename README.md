@@ -16,7 +16,7 @@ In the original table, everything where together with a column each. To normaliz
 <br>
 # GitBash commands for opening Docker <br>
 <br>
-**To run the script you need to run the following commands in GitBash (Or similar Unix terminal)** <br>
+**To run the script you need to run the following commands in GitBash (Or similar Unix Shell)** <br>
 <br>
 curl -L https://raw.githubusercontent.com/UlrikaMyAlva/db2022/main/denormalized-data.csv -o denormalized-data.csv <br>
 <br>
