@@ -1,5 +1,5 @@
 # Db2022
-Normalization of a database as a school project at ITHS. In this repository your will find a ER diagram to show the relationships in the normalized data, a script to normalize a database (UNF) and a JBDC CRUD.  
+Normalization of a database as a school project at ITHS. In this repository your will find a ER diagram to show the relationships in the normalized data and a script to normalize a database (UNF). The JBDC CRUD you will find in my other repository: https://github.com/UlrikaMyAlva/CrudJbdc.git.  
 <br>
 <br>
 To make this diagram we have used Mermaid, which is a tool to be able to draw a diagram using markdown language. <br>
