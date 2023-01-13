@@ -23,7 +23,7 @@ In the original table, everything where together with a column each. To normaliz
 **To run the script you need to run the following commands in GitBash (Or similar Unix Shell)** 
 
 
-```curl -L https://raw.githubusercontent.com/UlrikaMyAlva/db2022/main/denormalized-data.csv -o denormalized-data.csv <br>
+curl -L https://raw.githubusercontent.com/UlrikaMyAlva/db2022/main/denormalized-data.csv -o denormalized-data.csv <br>
 <br>
 docker start iths-mysql <br>
 <br>
@@ -31,11 +31,12 @@ docker cp denormalized-data.csv iths-mysql:/var/lib/mysql-files <br>
 <br>
 cd ws
 <br>
+<br>
 docker exec -i iths-mysql mysql -uroot -proot < normalisering.sql <br>
 <br>
 winpty docker exec -it iths-mysql bash <br>
 <br>
-mysql -uiths -piths ```
+mysql -uroot -proot 
 
 
 
@@ -266,7 +267,4 @@ UPDATE Phone
 SET Type = "Mobile"
 WHERE Type IS NULL;```
 
-
-
-Can I write something here now?
 
